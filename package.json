@@ -1,0 +1,19 @@
+{
+  "name": "observable-state",
+  "version": "1.0.0",
+  "description": "observable state object",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/adrianaryaputra/observable-state.git"
+  },
+  "author": "adrianaryaputra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adrianaryaputra/observable-state/issues"
+  },
+  "homepage": "https://github.com/adrianaryaputra/observable-state#readme"
+}
