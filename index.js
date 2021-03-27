@@ -45,7 +45,7 @@ module.exports = class ObservableState {
         let serNew = JSON.stringify(newStateValue);
 
         if (Array.isArray(newStateValue)) 
-            if(newStateValue.length !== this.state[newStateKey].length)
+            if(newStateValue.length !== this.state[newStateKey]?.length)
                 serNew = undefined
 
         if (serOld !== serNew) {
