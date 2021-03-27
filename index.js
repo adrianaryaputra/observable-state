@@ -19,7 +19,7 @@ module.exports = class ObservableState {
             for (const key in newStates) {
                 switch(typeof(newStates[key])) {
                     case 'object':
-                        this._updateStateArray(key, newStates[key]);
+                        this._updateStateObject(key, newStates[key]);
                         break;
                     default:
                         this._updateStatePrimitive(key, newStates[key]);
@@ -35,25 +35,26 @@ module.exports = class ObservableState {
         return this.state
     }
 
-    _updateStateArray(newStateKey, newStateValue) {
+    _updateStateObject(newStateKey, newStateValue) {
         // filter the damn data
         if (newStateValue === undefined) return
         if (newStateValue === null) return
 
-        if(typeof newStateValue == 'object') {
-            
-            // serialize array / object
-            let serOld = JSON.stringify(this.state[newStateKey]);
-            let serNew = JSON.stringify(newStateValue);
+        // serialize object
+        let serOld = JSON.stringify(this.state[newStateKey]);
+        let serNew = JSON.stringify(newStateValue);
 
-            if (serOld != serNew) {
-                // change it
-                this.state[newStateKey] = newStateValue;
-                // call the handle
-                this.stateHandle[newStateKey](
-                    this.state[newStateKey]
-                )
-            }
+        if (Array.isArray(newStateValue)) 
+            if(newStateValue.length !== this.state[newStateKey].length)
+                serNew = undefined
+
+        if (serOld !== serNew) {
+            // change it
+            this.state[newStateKey] = newStateValue;
+            // call the handle
+            this.stateHandle[newStateKey](
+                this.state[newStateKey]
+            )
         }
 
     }
@@ -64,7 +65,7 @@ module.exports = class ObservableState {
         if (newStateValue === null) return
 
         // if there is change
-        if (this.state[newStateKey] != newStateValue) {
+        if (this.state[newStateKey] !== newStateValue) {
             // change it
             this.state[newStateKey] = newStateValue;
             // call the handle
